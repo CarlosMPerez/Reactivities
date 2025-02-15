@@ -24,6 +24,8 @@ app.UseCors(opt => opt
             .AllowAnyMethod()
             .WithOrigins("http://localhost:3000", "https://localhost:3000"));
 
+app.UseHttpsRedirection();
+
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();

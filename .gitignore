@@ -390,6 +390,11 @@ FodyWeavers.xsd
 !.vscode/extensions.json
 *.code-workspace
 
+# SQLite temp files
+*.db-schema
+*.db-shm
+*.db-wal
+
 # Local History for Visual Studio Code
 .history/
 
