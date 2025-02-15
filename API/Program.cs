@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -7,18 +6,30 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<AppDbContext>(opt => 
+builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddCors();
+
+// builder.Logging.ClearProviders();
+// builder.Logging.AddConsole();
+
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseCors(opt => opt
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("http://localhost:3000", "https://localhost:3000"));
+
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
+
+
 
 try
 {
