@@ -7,13 +7,14 @@ function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
 
   useEffect(() => {
-    axios.get<Activity[]>("https://localhost:5001/api/activities")
+    axios
+      .get<Activity[]>("https://localhost:5001/api/activities")
       .then((response) => setActivities(response.data));
   }, []);
 
   return (
     <>
-      <Typography variant='h3'>Reactivities</Typography>
+      <Typography variant="h3">Reactivities</Typography>
       <List>
         {activities.map((actv) => (
           <ListItem key={actv.id}>

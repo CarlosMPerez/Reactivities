@@ -13,10 +13,6 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 
 builder.Services.AddCors();
 
-// builder.Logging.ClearProviders();
-// builder.Logging.AddConsole();
-
-
 var app = builder.Build();
 
 app.UseCors(opt => opt
