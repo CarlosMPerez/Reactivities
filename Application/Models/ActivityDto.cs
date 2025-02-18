@@ -1,8 +1,8 @@
-namespace Domain;
+namespace Application;
 
-public class Activity
+public record ActivityDto
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
+    public string Id { get; set;}
     public required string Title { get; set; }
     public DateTime Date { get; set; }
     public required string Description { get; set; }   
@@ -14,4 +14,9 @@ public class Activity
     public required string Venue { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set;}
+
+    public ActivityDto()
+    {
+        Id = Guid.NewGuid().ToString();
+    }
 }
