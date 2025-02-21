@@ -2,12 +2,13 @@ using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Application.Activities.Models;
 
 namespace Application.Activities.Queries;
 
 public class GetActivityList
 {
-    public class Query : IRequest<List<ActivityDto>> {}
+    public class Query : IRequest<List<ActivityDto>> { }
 
     public class Handler(AppDbContext context) : IRequestHandler<Query, List<ActivityDto>>
     {
@@ -15,7 +16,8 @@ public class GetActivityList
         {
             var activities = await context.Activities.ToListAsync(cancellationToken);
             List<ActivityDto> activityDtos = new List<ActivityDto>();
-            foreach (var activity in activities){
+            foreach (var activity in activities)
+            {
                 activityDtos.Add(MapperlyMapper.Map(activity));
             }
 

@@ -1,8 +1,7 @@
-using System;
-using System.Runtime.InteropServices;
 using Domain;
 using MediatR;
 using Persistence;
+using Application.Activities.Models;
 
 namespace Application.Activities.Queries;
 
@@ -19,7 +18,7 @@ public class GetActivityDetails
         {
             var actv = await context.Activities
                         .FindAsync([request.Id], cancellationToken);
-            
+
             if (actv == null) throw new Exception("Activity not found");
 
             return MapperlyMapper.Map(actv);

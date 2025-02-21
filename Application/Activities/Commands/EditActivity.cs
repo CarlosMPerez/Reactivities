@@ -2,6 +2,7 @@ using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Application.Activities.Models;
 
 namespace Application.Activities.Commands;
 
@@ -17,7 +18,7 @@ public class EditActivity
         public async Task Handle(Command request, CancellationToken cancellationToken)
         {
             var activity = await context.Activities
-                                .FindAsync([request.ActivityDto.Id], cancellationToken) 
+                                .FindAsync([request.ActivityDto.Id], cancellationToken)
                                 ?? throw new Exception("Cannot find activity");
             context.Entry(activity).State = EntityState.Detached;
 

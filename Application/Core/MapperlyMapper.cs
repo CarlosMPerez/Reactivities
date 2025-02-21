@@ -1,5 +1,5 @@
 using Riok.Mapperly.Abstractions;
-using Application;
+using Application.Activities.Models;
 
 namespace Domain;
 
