@@ -18,7 +18,7 @@ public class GetActivityList
             List<ActivityDto> activityDtos = new List<ActivityDto>();
             foreach (var activity in activities)
             {
-                activityDtos.Add(MapperlyMapper.Map(activity));
+                activityDtos.Add(ReactivitiesMapper.Map(activity));
             }
 
             return activityDtos;

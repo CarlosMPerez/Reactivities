@@ -4,7 +4,7 @@ using Application.Activities.Models;
 namespace Domain;
 
 [Mapper]
-public static partial class MapperlyMapper
+public static partial class ReactivitiesMapper
 {
     public static partial Activity Map(ActivityDto activity);
 

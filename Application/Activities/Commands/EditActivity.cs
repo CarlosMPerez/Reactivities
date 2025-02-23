@@ -22,7 +22,7 @@ public class EditActivity
                                 ?? throw new Exception("Cannot find activity");
             context.Entry(activity).State = EntityState.Detached;
 
-            activity = MapperlyMapper.Map(request.ActivityDto);
+            activity = ReactivitiesMapper.Map(request.ActivityDto);
 
             context.Activities.Update(activity);
             await context.SaveChangesAsync(cancellationToken);

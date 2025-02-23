@@ -16,7 +16,7 @@ public class CreateActivity
     {
         public async Task<string> Handle(Command request, CancellationToken cancellationToken)
         {
-            context.Activities.Add(MapperlyMapper.Map(request.ActivityDto));
+            context.Activities.Add(ReactivitiesMapper.Map(request.ActivityDto));
             await context.SaveChangesAsync(cancellationToken);
             return request.ActivityDto.Id!;
         }
