@@ -4,7 +4,13 @@ import { Box, AppBar, Toolbar,
     Typography,
     Button} from '@mui/material';
 
-export default function NavBar() {
+type NavBarProps = {
+    openForm: () => void;
+}
+
+export default function NavBar(props: NavBarProps) {
+    const {openForm} = props;
+
   return (
     <Box sx={{ flexGrow: 1 }}>
     <AppBar position="static" sx={{ 
@@ -41,7 +47,14 @@ export default function NavBar() {
                         Contact
                     </MenuItem>
                 </Box>
-                <Button size="large" variant="contained" color="warning">Create activity</Button>
+                <Button 
+                    size="large" 
+                    variant="contained" 
+                    color="warning"
+                    onClick={openForm}
+                    >
+                        Create activity
+                </Button>
             </Toolbar>
         </Container>
     </AppBar>
