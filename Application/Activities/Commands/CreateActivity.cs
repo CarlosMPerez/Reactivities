@@ -1,6 +1,6 @@
-using Domain;
 using MediatR;
 using Persistence;
+using Application.Core;
 using Application.Activities.Models;
 
 namespace Application.Activities.Commands;

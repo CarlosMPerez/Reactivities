@@ -1,7 +1,8 @@
+using Domain.Entities;
 using Riok.Mapperly.Abstractions;
 using Application.Activities.Models;
 
-namespace Domain;
+namespace Application.Core;
 
 [Mapper]
 public static partial class ReactivitiesMapper
