@@ -1,29 +1,47 @@
-import { Button, Card, CardActions, 
-    CardContent, CardMedia, Typography } from "@mui/material"
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
+import { useActivities } from "../../../lib/hooks/useActivities";
 
 type ActivityDetailProps = {
-    activity: Activity,
-    cancelSelectActivity: () => void,
-    openForm: (id: string) => void
-}
+  selectedActivity: Activity;
+  cancelSelectActivity: () => void;
+  openForm: (id: string) => void;
+};
 
 export default function ActivityDetail(props: ActivityDetailProps) {
-    const {activity, cancelSelectActivity, openForm} = props;
-    return (
-        <Card sx={{borderRadius: 3}}>
-            <CardMedia
-                component="img"
-                src={`/images/categoryImages/${activity.category}.jpg`}
-            />
-            <CardContent>
-                <Typography variant="h5">{activity.title}</Typography>
-                <Typography variant="subtitle1" fontWeight="light">{activity.date}</Typography>
-                <Typography variant="body1">{activity.description}</Typography>
-            </CardContent>
-            <CardActions>
-                <Button onClick={() => openForm(activity.id)} color="primary">Edit</Button>
-                <Button onClick={cancelSelectActivity} color="inherit">Cancel</Button>
-            </CardActions>
-        </Card>
-    );
+  const { selectedActivity, cancelSelectActivity, openForm } = props;
+  const { activities } = useActivities();
+
+  const activity = activities?.find((x) => x.id === selectedActivity.id);
+  if (!activity) return <Typography>Loading...</Typography>;
+
+  return (
+    <Card sx={{ borderRadius: 3 }}>
+      <CardMedia
+        component="img"
+        src={`/images/categoryImages/${activity.category}.jpg`}
+      />
+      <CardContent>
+        <Typography variant="h5">{activity.title}</Typography>
+        <Typography variant="subtitle1" fontWeight="light">
+          {activity.date.split("T")[0]}
+        </Typography>
+        <Typography variant="body1">{activity.description}</Typography>
+      </CardContent>
+      <CardActions>
+        <Button onClick={() => openForm(activity.id)} color="primary">
+          Edit
+        </Button>
+        <Button onClick={cancelSelectActivity} color="inherit">
+          Cancel
+        </Button>
+      </CardActions>
+    </Card>
+  );
 }

@@ -5,14 +5,16 @@ import ActivityDashboard from "../../features/activities/dashboard/ActivityDashb
 import { useActivities } from "../../lib/hooks/useActivities";
 
 function App() {
-  const [selectedActivity, setSelectedActivity] = 
-    useState<Activity | undefined>(undefined);
+  const [selectedActivity, setSelectedActivity] = useState<
+    Activity | undefined
+  >(undefined);
   const [editMode, setEditMode] = useState(false);
 
-  const {activities, isPending} = useActivities();
+  // Loading of activities using react.query hooks (and axios)
+  const { activities, isPending } = useActivities();
 
   const handleSelectActivity = (id: string) => {
-    setSelectedActivity(activities!.find(x => x.id === id));
+    setSelectedActivity(activities!.find((x) => x.id === id));
   };
 
   const handleCancelSelectActivity = () => {
@@ -23,53 +25,29 @@ function App() {
     if (id) handleSelectActivity(id);
     else handleCancelSelectActivity();
     setEditMode(true);
-  }
+  };
 
   const handleFormClose = () => {
     setEditMode(false);
-  }
-
-  const handleSubmitForm = (activity: Activity) => {
-    // if (activity.id) {
-    //   setActivities(activities!.map(x => x.id === activity.id ? 
-    //     activity : x
-    //   ))
-    // } else {
-    //   const newActivity = {...activity, id: activities.length.toString()}
-    //   setSelectedActivity(newActivity);
-    //   setActivities([...activities, newActivity])
-    // }
-
-    console.log(activity);
-    setEditMode(false);
-  }
-
-  const handleDelete = (id: string) => {
-    //setActivities(activities.filter(x => x.id !== id));
-    console.log(id);
-  }
+  };
 
   return (
-    <Box sx={{bgcolor: "#eeeeee", minHeight: "100vh"}}>
+    <Box sx={{ bgcolor: "#eeeeee", minHeight: "100vh" }}>
       <CssBaseline />
-      <NavBar 
-        openForm={handleFormOpen}
-      />
-      <Container maxWidth="xl" sx={{marginTop: 3}}>
+      <NavBar openForm={handleFormOpen} />
+      <Container maxWidth="xl" sx={{ marginTop: 3 }}>
         {!activities || isPending ? (
           <Typography>Loading...</Typography>
         ) : (
-            <ActivityDashboard 
-              activities={activities}
-              selectedActivity={selectedActivity}
-              selectActivity={handleSelectActivity}
-              cancelSelectActivity={handleCancelSelectActivity}
-              editMode={editMode}
-              openForm={handleFormOpen}
-              closeForm={handleFormClose}
-              submitForm={handleSubmitForm}
-              deleteActivity={handleDelete}
-            />
+          <ActivityDashboard
+            activities={activities}
+            selectedActivity={selectedActivity}
+            selectActivity={handleSelectActivity}
+            cancelSelectActivity={handleCancelSelectActivity}
+            editMode={editMode}
+            openForm={handleFormOpen}
+            closeForm={handleFormClose}
+          />
         )}
       </Container>
     </Box>
