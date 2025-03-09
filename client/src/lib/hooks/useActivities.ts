@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import agent from "../api/agent";
 
-export const useActivities = () => {
+export const useActivities = (id?: string) => {
   const queryClient = useQueryClient();
 
   // useQuery runs AUTO when the component mounts or when its queryKey changes
@@ -12,6 +12,18 @@ export const useActivities = () => {
       const response = await agent.get<Activity[]>("/activities");
       return response.data;
     },
+  });
+
+  // this userQuery would ALSO run automatically every time a component that uses
+  // the hook useActivities is loaded, even if it has an id or not. So we
+  // include the field enabled to determine if its needed or not
+  const { data: activity, isLoading: isLoadingActivity } = useQuery({
+    queryKey: ["activities", id],
+    queryFn: async () => {
+      const response = await agent.get<Activity>(`/activities/${id}`);
+      return response.data;
+    },
+    enabled: !!id,
   });
 
   // useMutation is the method used to update data via a PUT request also using axios
@@ -31,7 +43,8 @@ export const useActivities = () => {
   // same as before, but in this case we use a POST API call
   const createActivity = useMutation({
     mutationFn: async (activity: Activity) => {
-      await agent.post("/activities", activity);
+      const response = await agent.post("/activities", activity);
+      return response.data;
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
@@ -57,5 +70,7 @@ export const useActivities = () => {
     updateActivity,
     createActivity,
     deleteActivity,
+    activity,
+    isLoadingActivity,
   };
 };

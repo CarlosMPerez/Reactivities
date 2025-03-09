@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useActivities } from "../../../lib/hooks/useActivities";
+import { Link } from "react-router";
 
 type ActivityCardProps = {
   activity: Activity;
@@ -22,7 +23,7 @@ export default function ActivityCard(props: ActivityCardProps) {
       <CardContent>
         <Typography variant="h5">{activity.title}</Typography>
         <Typography sx={{ color: "text.secondary", marginButton: 1 }}>
-          {activity.date.split("T")[0]}
+          {activity.date ? activity.date.split("T")[0] : ""}
         </Typography>
         <Typography variant="body2">{activity.description}</Typography>
         <Typography variant="subtitle1">
@@ -48,7 +49,8 @@ export default function ActivityCard(props: ActivityCardProps) {
             Delete
           </Button>
           <Button
-            onClick={() => {}}
+            component={Link}
+            to={`/activities/${activity.id}`}
             size="medium"
             variant="contained"
           >
