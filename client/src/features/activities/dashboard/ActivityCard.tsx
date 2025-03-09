@@ -11,12 +11,10 @@ import { useActivities } from "../../../lib/hooks/useActivities";
 
 type ActivityCardProps = {
   activity: Activity;
-  selectActivity: (id: string) => void;
 };
 
 export default function ActivityCard(props: ActivityCardProps) {
-  const { activity, selectActivity } = props;
-
+  const { activity } = props;
   const { deleteActivity } = useActivities();
 
   return (
@@ -50,7 +48,7 @@ export default function ActivityCard(props: ActivityCardProps) {
             Delete
           </Button>
           <Button
-            onClick={() => selectActivity(activity.id)}
+            onClick={() => {}}
             size="medium"
             variant="contained"
           >
