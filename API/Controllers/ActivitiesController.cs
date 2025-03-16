@@ -20,9 +20,9 @@ public class ActivitiesController() : BaseApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<string>> CreateActivity(ActivityDto activity)
+    public async Task<ActionResult<string>> CreateActivity(CreateActivityDto dto)
     {
-        return await Mediator.Send(new CreateActivity.Command { ActivityDto = activity });
+        return await Mediator.Send(new CreateActivity.Command{Model = dto});
     }
 
     [HttpPut]

@@ -21,7 +21,7 @@ public class GetActivityDetails
 
             if (actv == null) throw new Exception("Activity not found");
 
-            return ReactivitiesMapper.Map(actv);
+            return ActivitiesMapper.Map(actv);
         }
     }
 }

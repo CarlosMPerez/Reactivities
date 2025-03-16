@@ -1,4 +1,6 @@
 using Application.Activities.Queries;
+using Application.Activities.Validators;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -22,7 +24,7 @@ public class Program
         builder.Services.AddMediatR(opt => {
             opt.RegisterServicesFromAssemblyContaining<GetActivityList.Handler>();
         });
-
+        builder.Services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
 
         var app = builder.Build();
 
