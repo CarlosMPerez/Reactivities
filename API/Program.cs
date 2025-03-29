@@ -1,5 +1,6 @@
 using Application.Activities.Queries;
 using Application.Activities.Validators;
+using Application.Core;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -21,8 +22,10 @@ public class Program
         });
 
         builder.Services.AddCors();
-        builder.Services.AddMediatR(opt => {
+        builder.Services.AddMediatR(opt =>
+        {
             opt.RegisterServicesFromAssemblyContaining<GetActivityList.Handler>();
+            opt.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
         builder.Services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
 

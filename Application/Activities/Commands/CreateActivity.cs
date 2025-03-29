@@ -13,11 +13,10 @@ public class CreateActivity
         public required CreateActivityDto Model { get; set; }
     }
 
-    public class Handler(AppDbContext context, IValidator<Command> validator) : IRequestHandler<Command, string>
+    public class Handler(AppDbContext context) : IRequestHandler<Command, string>
     {
         public async Task<string> Handle(Command request, CancellationToken cancellationToken)
         {
-            await validator.ValidateAndThrowAsync(request, cancellationToken);
             var newActivity = ActivitiesMapper.Map(request.Model);
             context.Activities.Add(newActivity);
             await context.SaveChangesAsync(cancellationToken);
