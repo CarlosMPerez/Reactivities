@@ -1,7 +1,6 @@
 using Persistence;
 using Application.Core;
 using Application.Activities.Models;
-using FluentValidation;
 
 namespace Application.Activities.Commands;
 
@@ -16,7 +15,7 @@ public class CreateActivity
     {
         public async Task HandleAsync(Command command, CancellationToken cancellationToken)
         {
-            var newActivity = ActivitiesMapper.Map(command.Model);
+            var newActivity = command.Model.ToEntity();
             context.Activities.Add(newActivity);
             await context.SaveChangesAsync(cancellationToken);
         }

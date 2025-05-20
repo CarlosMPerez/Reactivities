@@ -20,7 +20,7 @@ public class GetActivityDetails
 
             if (actv == null) throw new Exception("Activity not found");
 
-            return ActivitiesMapper.Map(actv);
+            return actv.ToDto();
         }
     }
 }

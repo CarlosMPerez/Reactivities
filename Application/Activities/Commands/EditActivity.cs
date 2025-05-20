@@ -21,7 +21,7 @@ public class EditActivity
                                 ?? throw new Exception("Cannot find activity");
             context.Entry(activity).State = EntityState.Detached;
 
-            activity = ActivitiesMapper.Map(command.ActivityDto);
+            activity = command.ActivityDto.ToEntity();
 
             context.Activities.Update(activity);
             await context.SaveChangesAsync(cancellationToken);

@@ -1,17 +1,56 @@
 using Domain.Entities;
-using Riok.Mapperly.Abstractions;
 using Application.Activities.Models;
 
 namespace Application.Core;
 
-[Mapper]
-public static partial class ActivitiesMapper
+public static class ActivityMappingExtensions
 {
-    public static partial Activity Map(ActivityDto activity);
+    public static ActivityDto ToDto(this Activity entity)
+    {
+        return new ActivityDto
+        {
+            Id = entity.Id,
+            Title = entity.Title,
+            Description = entity.Description,
+            Date = entity.Date,
+            Category = entity.Category,
+            City = entity.City,
+            Venue = entity.Venue,
+            IsCancelled = entity.IsCancelled,
+            Latitude = entity.Latitude,
+            Longitude = entity.Longitude
+        };
+    }
 
-    public static partial ActivityDto Map(Activity activity);
+    public static Activity ToEntity(this CreateActivityDto dto)
+    {
+        return new Activity
+        {
+            Title = dto.Title,
+            Description = dto.Description,
+            Date = dto.Date,
+            Category = dto.Category,
+            City = dto.City,
+            Venue = dto.Venue,
+            Latitude = dto.Latitude,
+            Longitude = dto.Longitude
+        };
+    }
 
-    [MapperIgnoreTarget(nameof(Activity.Id))]
-    [MapperIgnoreTarget(nameof(Activity.IsCancelled))]
-    public static partial Activity Map(CreateActivityDto activity);
+    public static Activity ToEntity(this ActivityDto dto)
+    {
+        return new Activity
+        {
+            Id = dto.Id,
+            Title = dto.Title,
+            Description = dto.Description,
+            Date = dto.Date,
+            Category = dto.Category,
+            City = dto.City,
+            Venue = dto.Venue,
+            IsCancelled = dto.IsCancelled,
+            Latitude = dto.Latitude,
+            Longitude = dto.Longitude
+        };
+    }
 }
