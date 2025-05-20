@@ -1,6 +1,9 @@
+using Application.Activities.Commands;
+using Application.Activities.Models;
 using Application.Activities.Queries;
 using Application.Activities.Validators;
 using Application.Core;
+using Application.Core.CQRS;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -22,14 +25,21 @@ public class Program
         });
 
         builder.Services.AddCors();
-        builder.Services.AddMediatR(opt =>
-        {
-            opt.RegisterServicesFromAssemblyContaining<GetActivityList.Handler>();
-            opt.AddOpenBehavior(typeof(ValidationBehavior<,>));
-        });
+        builder.Services.AddScoped<ICommandDispatcher, CommandDispatcher>();
+        builder.Services.AddScoped<IQueryDispatcher, QueryDispatcher>();
+
+        builder.Services.AddScoped<ICommandHandler<CreateActivity.Command>, CreateActivity.Handler>();
+        builder.Services.AddScoped<ICommandHandler<EditActivity.Command>, EditActivity.Handler>();
+        builder.Services.AddScoped<ICommandHandler<DeleteActivity.Command>, DeleteActivity.Handler>();
+
+        builder.Services.AddScoped<IQueryHandler<GetActivityDetails.Query, ActivityDto>, GetActivityDetails.Handler>();
+        builder.Services.AddScoped<IQueryHandler<GetActivityList.Query, List<ActivityDto>>, GetActivityList.Handler>();
+        
         builder.Services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
 
         var app = builder.Build();
+
+        app.UseRouting();
 
         app.UseCors(opt => opt
                     .AllowAnyHeader()

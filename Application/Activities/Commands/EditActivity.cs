@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Application.Core;
@@ -8,21 +7,21 @@ namespace Application.Activities.Commands;
 
 public class EditActivity
 {
-    public class Command : IRequest
+    public class Command : ICommand
     {
         public required ActivityDto ActivityDto { get; set; }
     }
 
-    public class Handler(AppDbContext context) : IRequestHandler<Command>
+    public class Handler(AppDbContext context) : ICommandHandler<Command>
     {
-        public async Task Handle(Command request, CancellationToken cancellationToken)
+        public async Task HandleAsync(Command command, CancellationToken cancellationToken)
         {
             var activity = await context.Activities
-                                .FindAsync([request.ActivityDto.Id], cancellationToken)
+                                .FindAsync([command.ActivityDto.Id], cancellationToken)
                                 ?? throw new Exception("Cannot find activity");
             context.Entry(activity).State = EntityState.Detached;
 
-            activity = ActivitiesMapper.Map(request.ActivityDto);
+            activity = ActivitiesMapper.Map(command.ActivityDto);
 
             context.Activities.Update(activity);
             await context.SaveChangesAsync(cancellationToken);

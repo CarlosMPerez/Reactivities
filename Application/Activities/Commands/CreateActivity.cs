@@ -1,4 +1,3 @@
-using MediatR;
 using Persistence;
 using Application.Core;
 using Application.Activities.Models;
@@ -8,19 +7,18 @@ namespace Application.Activities.Commands;
 
 public class CreateActivity
 {
-    public class Command : IRequest<string>
+    public class Command : ICommand
     {
         public required CreateActivityDto Model { get; set; }
     }
 
-    public class Handler(AppDbContext context) : IRequestHandler<Command, string>
+    public class Handler(AppDbContext context) : ICommandHandler<Command>
     {
-        public async Task<string> Handle(Command request, CancellationToken cancellationToken)
+        public async Task HandleAsync(Command command, CancellationToken cancellationToken)
         {
-            var newActivity = ActivitiesMapper.Map(request.Model);
+            var newActivity = ActivitiesMapper.Map(command.Model);
             context.Activities.Add(newActivity);
             await context.SaveChangesAsync(cancellationToken);
-            return newActivity.Id!;
         }
     }
 }
